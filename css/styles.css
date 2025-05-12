@@ -1,0 +1,189 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+.text-gold {
+  color: #000000;
+}
+
+/* Altura fija para el carrusel */
+#carruselGaleria .carousel-item img {
+  height: 500px; /* o el alto que quieras usar */
+  object-fit: cover;
+}
+#carruselGaleria {
+  max-width: 900px;      /* ancho máximo del carrusel */
+  margin: 0 auto;
+}
+
+#carruselGaleria .carousel-item img {
+  width: 100%;
+  height: 500px;         /* alto fijo para todas las fotos */
+  object-fit: cover;     /* recorta lo que sobra para que todas llenen el espacio */
+  object-position: center;
+  border-radius: 15px;
+}
+/* Botón flotante de WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: white;
+  font-size: 28px;
+  padding: 15px 17px;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  transition: transform 0.2s ease-in-out;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  text-decoration: none;
+  color: white;
+}
+
+.video-fondo-lateral {
+  width: 100%;
+  height: 500px; /* mismo valor que el del carrusel */
+  object-fit: cover;
+  opacity: 0.45;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.navbar-nav .nav-link {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.titulo-servicios {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #003202; /* dorado */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.titulo-servicios::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #003202;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.topbar {
+  font-size: 0.9rem;
+  background-color: #003202; /* un verde oscuro más sobrio */
+}
+
+.topbar a:hover {
+  color: #003202;
+}
+
+header {
+  padding-top: 2.5rem; /* ajustá si necesitás separarlo de la topbar */
+}
+
+.btn-verde-oscuro-outline {
+  background-color: transparent;
+  border: 2px solid #104d3f;
+  color: #104d3f;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-verde-oscuro-outline:hover {
+  background-color: #104d3f;
+  color: white;
+}
+
+.btn-servicio {
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  letter-spacing: 0.5px;
+}
+
+.btn-servicio:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #006400; /* verde oscuro */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #004d00; /* un verde aún más oscuro al pasar el mouse */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #2e7d32;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  align-self: center;
+  padding: 12px 25px;
+  background-color: #006400;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #004d00;
+}
+
+#mensaje {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #2e7d32;
+}
+
+#nombre {
+  margin-bottom: 20px;
+}
