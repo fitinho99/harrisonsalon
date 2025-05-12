@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendario</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #d4fc79, #96e6a1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #2e7d32;
+    }
+
+    input[type="date"], select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #006400;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+  #nombre {
+    margin-bottom: 20px;
+    }
+    button:hover {
+      background-color: #004d00;
+    }
+
+    #mensaje {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Reservá tu turno</h2>
+    <form onsubmit="event.preventDefault(); confirmarTurno();">
+  <div class="form-group">
+    
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" />
+  </div>
+
+  <div class="form-group">
+  
+    <input type="date" id="fecha" onchange="generarHorarios()" min="">
+  </div>
+
+  <div class="form-group">
+    <label for="horario">Horario disponible:</label>
+    <div id="horarios">
+      <select disabled><option>Seleccione una fecha</option></select>
+    </div>
+  </div>
+
+  <button type="submit">Confirmar turno</button>
+  <p id="mensaje"></p>
+</form>
+
+  <script>
+    // Setear mínimo al día actual
+    const inputFecha = document.getElementById('fecha');
+    const hoy = new Date().toISOString().split('T')[0];
+    inputFecha.min = hoy;
+
+    function generarHorarios() {
+  const fechaInput = document.getElementById('fecha');
+  const horariosDiv = document.getElementById('horarios');
+  horariosDiv.innerHTML = '';
+
+  // Evitar bug de zona horaria
+  const partes = fechaInput.value.split("-");
+  const fecha = new Date(partes[0], partes[1] - 1, partes[2]);
+
+  if (isNaN(fecha)) return;
+
+  const dia = fecha.getDay(); // 0 = Domingo, 1 = Lunes, ..., 6 = Sábado
+
+  let inicio, fin;
+  if (dia >= 2 && dia <= 5) { // Martes a Viernes
+    inicio = 11;
+    fin = 20; // hasta 19:30
+  } else if (dia === 6) { // Sábado
+    inicio = 10;
+    fin = 17.5; // hasta 17:00
+  } else {
+    horariosDiv.innerHTML = "<p><strong>Cerrado.</strong> No se toman turnos este día.</p>";
+    return;
+  }
+
+  const fechaStr = fechaInput.value;
+  const turnosOcupados = JSON.parse(localStorage.getItem('turnos') || '{}')[fechaStr] || [];
+
+  let horariosHTML = '<select id="horario">';
+  for (let h = inicio; h < fin; h += 0.5) {
+    const hora = Math.floor(h).toString().padStart(2, '0');
+    const minutos = (h % 1 === 0) ? '00' : '30';
+    const horaStr = `${hora}:${minutos}`;
+    const ocupado = turnosOcupados.includes(horaStr);
+    horariosHTML += `<option value="${horaStr}" ${ocupado ? 'disabled' : ''}>${horaStr} ${ocupado ? '(Ocupado)' : ''}</option>`;
+  }
+  horariosHTML += '</select>';
+  horariosDiv.innerHTML = horariosHTML;
+}
+    function confirmarTurno() {
+      const fecha = document.getElementById('fecha').value;
+      const horario = document.getElementById('horario')?.value;
+      const mensaje = document.getElementById('mensaje');
+
+      if (!fecha || !horario) {
+        mensaje.textContent = "Seleccioná fecha y horario.";
+        return;
+      }
+
+      const turnos = JSON.parse(localStorage.getItem('turnos') || '{}');
+      if (!turnos[fecha]) {
+        turnos[fecha] = [];
+      }
+
+      if (turnos[fecha].includes(horario)) {
+        mensaje.textContent = "Ese turno ya está ocupado.";
+        return;
+      }
+
+      turnos[fecha].push(horario);
+      localStorage.setItem('turnos', JSON.stringify(turnos));
+      mensaje.textContent = `Turno reservado para el ${fecha} a las ${horario}.`;
+
+      generarHorarios();
+    }
+  </script>
+</body>
+</html>
