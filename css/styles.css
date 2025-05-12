@@ -187,3 +187,21 @@ button:hover {
 #nombre {
   margin-bottom: 20px;
 }
+
+h1 {
+  font-size: 40px;
+  text-align: center;
+}
+
+/* Estilo solo para celulares (pantallas de menos de 768px) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 24px;
+    text-align: left;
+  }
+
+  .galeria {
+    flex-direction: column;
+    align-items: center;
+  }
+}
